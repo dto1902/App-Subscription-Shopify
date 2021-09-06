@@ -81,7 +81,7 @@ function Add() {
         };
     
         // Here, send the form data to your app server to add the product to an existing plan.
-        const response = await fetch('https://b634-190-29-176-55.ngrok.io/auth?shop=uy-ala.myshopify.com', {
+        const response = await fetch('https://b634-190-29-176-55.ngrok.io', {
           headers: {
             'any-header-key': token || 'unknown token',
           },
@@ -92,7 +92,7 @@ function Add() {
         if (response.ok) {
           done();
         } else {
-          console.log(response);
+          console.log(token);
         }
     
         close();
