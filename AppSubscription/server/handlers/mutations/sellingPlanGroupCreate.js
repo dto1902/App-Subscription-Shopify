@@ -4,7 +4,7 @@ import { gql } from "apollo-boost";
 export function GROUP_CREATE() {
   return gql`
   mutation {
-    appSellingPlanGroupCreate(
+    sellingPlanGroupCreate(
       input: {
         name: "Subscribe and save"
         merchantCode: "subscribe-and-save"
@@ -67,7 +67,8 @@ export function GROUP_CREATE() {
         field
         message
       }
-    } 
+    }
+  }
   `;
 }
 

@@ -81,7 +81,7 @@ function Add() {
         };
     
         // Here, send the form data to your app server to add the product to an existing plan.
-        const response = await fetch('https://b634-190-29-176-55.ngrok.io', {
+        const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-01/graphql.json`, {
           headers: {
             'any-header-key': token || 'unknown token',
           },
@@ -92,7 +92,7 @@ function Add() {
         if (response.ok) {
           done();
         } else {
-          console.log(token);
+          console.log(response);
         }
     
         close();
@@ -158,7 +158,7 @@ function Create() {
     };
   
     // Here, send the form data to your app server to create the new plan.
-    const response = await fetch('https://6f22-190-29-176-55.ngrok.io', {
+    const response = await fetch('https://uy-ala.myshopify.com/admin/api/2021-01/graphql.json', {
       headers: {
         'any-header-key': token || 'unknown token',
       },
@@ -169,7 +169,7 @@ function Create() {
     if (response.ok) {
       done();
     } else {
-      console.log('DT-2-Handle error.');
+      console.log(response);
     }
   
     close();
@@ -257,7 +257,7 @@ function Remove() {
         };
     
         // Here, send the form data to your app server to add the product to an existing plan.
-        const response = await fetch('https://1b3f-190-29-176-55.ngrok.io/auth?shop=uy-ala.myshopify.com', {
+        const response = await fetch('https://c0c7-190-29-176-55.ngrok.io/AppSubscription/server/server.js', {
           headers: {
             'any-header-key': token || 'unknown token',
           },
