@@ -81,7 +81,7 @@ function Add() {
         };
     
         // Here, send the form data to your app server to add the product to an existing plan.
-        const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-01/graphql.json`, {
+        const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-07/graphql.json`, {
           headers: {
             'any-header-key': token || 'unknown token',
           },
@@ -144,9 +144,9 @@ function Create() {
   const {getSessionToken} = useSessionToken();
 
   // Mock plan settings
-  const [planTitle, setPlanTitle] = useState('');
-  const [percentageOff, setPercentageOff] = useState('');
-  const [deliveryFrequency, setDeliveryFrequency] = useState('');
+  const [planTitle, setPlanTitle] = useState('a');
+  const [percentageOff, setPercentageOff] = useState('4');
+  const [deliveryFrequency, setDeliveryFrequency] = useState('4');
 
   const onPrimaryAction = useCallback(async () => {
     const token = await getSessionToken();
@@ -158,13 +158,55 @@ function Create() {
     };
   
     // Here, send the form data to your app server to create the new plan.
-    const response = await fetch('https://uy-ala.myshopify.com/admin/api/2021-01/graphql.json', {
+    const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-07/graphql.json`, {
+      mode: 'no-cors',
+      method: "POST",
       headers: {
-        'any-header-key': token || 'unknown token',
+        'content-type': 'application/json',
+        'x-shopify-Access-Token': token || 'unknown token',
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        query: `
+        mutation {
+          sellingPlanGroupCreate(
+            input: {
+              name: "Subscribe and save"
+              merchantCode: "subscribe-and-save"
+              options: ["Delivery every"]
+              position: 1
+              sellingPlansToCreate: [
+                {
+                  name: "Delivered every week"
+                  options: "1 Week(s)"
+                  position: 1
+                  billingPolicy: { recurring: { interval: WEEK, intervalCount: 1 } }
+                  deliveryPolicy: { recurring: { interval: WEEK, intervalCount: 1 } }
+                  pricingPolicies: [
+                    {
+                      fixed: {
+                        adjustmentType: PERCENTAGE
+                        adjustmentValue: { percentage: 15.0 }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+            resources: ${payload}
+          ) {
+            sellingPlanGroup {
+              id
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }
+        `
+      }),
     });
-  
+    
     // If the server responds with an OK status, then refresh the UI and close the modal
     if (response.ok) {
       done();
@@ -175,7 +217,6 @@ function Create() {
     close();
   }, [getSessionToken, done, close]);
   
-
   const cachedActions = useMemo(
     () => (
       <Actions
@@ -186,7 +227,6 @@ function Create() {
     ),
     [onPrimaryAction, close]
   );
-
   return (
     <>
       <Stack spacing="none">
@@ -257,7 +297,7 @@ function Remove() {
         };
     
         // Here, send the form data to your app server to add the product to an existing plan.
-        const response = await fetch('https://c0c7-190-29-176-55.ngrok.io/AppSubscription/server/server.js', {
+        const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-07/graphql.json`, {
           headers: {
             'any-header-key': token || 'unknown token',
           },
@@ -321,7 +361,7 @@ function Edit() {
     };
   
     // Here, send the form data to your app server to add the product to an existing plan.
-    const response = await fetch('https://1b3f-190-29-176-55.ngrok.io/auth?shop=uy-ala.myshopify.com', {
+    const response = await fetch(`https://uy-ala.myshopify.com/admin/api/2021-07/graphql.json`, {
       headers: {
         'any-header-key': token || 'unknown token',
       },

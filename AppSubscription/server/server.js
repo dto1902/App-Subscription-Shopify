@@ -8,7 +8,7 @@ import next from "next";
 import Router from "koa-router";
 
 dotenv.config();
-const port = parseInt(process.env.PORT, 10) || 4040;
+const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({
   dev,
@@ -20,14 +20,12 @@ Shopify.Context.initialize({
   API_SECRET_KEY: process.env.SHOPIFY_API_SECRET,
   SCOPES: process.env.SCOPES.split(","),
   HOST_NAME: process.env.HOST.replace(/https:\/\//, ""),
-  API_VERSION: ApiVersion.July21,
+  API_VERSION: ApiVersion.October20,
   IS_EMBEDDED_APP: true,
   // This should be replaced with your preferred storage strategy
   SESSION_STORAGE: new Shopify.Session.MemorySessionStorage(),
 });
 
-const getSubscriptionUrl = require('./handlers/mutations/get-subscription-url');
-const getGroupCreateUrl = require('./handlers/mutations/sellingPlanGroupCreate');
 // Storing the currently active shops in memory will force them to re-login when your server restarts. You should
 // persist this object in your app.
 const ACTIVE_SHOPIFY_SHOPS = {};
